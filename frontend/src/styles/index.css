@@ -1,0 +1,112 @@
+@import 'tailwindcss';
+@import '@tokens/tokens.css';
+@import './brand.css';
+
+/* 讓 Tailwind 4 的顏色 utility 全部指向 token。
+   兩組名稱：
+   1. 安心行名稱（brand、cta、success、trip-departed…）——自己寫的元件用這組
+   2. shadcn 名稱（primary、background、muted、destructive…）——之後用 shadcn CLI 加元件可直接套用
+   注意：shadcn 的 accent 是「hover 淺底」，所以安心行的強調色叫 cta，不叫 accent。 */
+@theme inline {
+  --font-sans: var(--font-body);
+
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-on-brand: var(--on-brand);
+  --color-cta: var(--cta);
+  --color-cta-soft: var(--cta-soft);
+  --color-on-cta: var(--on-cta);
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--text);
+  --color-fg-2: var(--text-2);
+  --color-fg-muted: var(--muted);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-2: var(--sidebar-2);
+  --color-sidebar-text: var(--sidebar-text);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+
+  --color-trip-assigned: var(--trip-assigned);
+  --color-trip-assigned-soft: var(--trip-assigned-soft);
+  --color-trip-departed: var(--trip-departed);
+  --color-trip-departed-soft: var(--trip-departed-soft);
+  --color-trip-onboard: var(--trip-onboard);
+  --color-trip-onboard-soft: var(--trip-onboard-soft);
+  --color-trip-done: var(--trip-done);
+  --color-trip-done-soft: var(--trip-done-soft);
+  --color-trip-alert: var(--trip-alert);
+  --color-trip-alert-soft: var(--trip-alert-soft);
+
+  /* shadcn 相容名稱 */
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text);
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--text);
+  --color-primary: var(--brand);
+  --color-primary-foreground: var(--on-brand);
+  --color-secondary: var(--surface-2);
+  --color-secondary-foreground: var(--text);
+  --color-muted: var(--surface-2);
+  --color-muted-foreground: var(--muted);
+  --color-accent: var(--brand-soft);
+  --color-accent-foreground: var(--text);
+  --color-destructive: var(--danger);
+  --color-input: var(--border-strong);
+  --color-ring: var(--brand);
+
+  --radius-sm: var(--round-sm);
+  --radius-md: var(--round);
+  --radius-lg: var(--round-lg);
+  --shadow-sm: var(--elev-sm);
+  --shadow-md: var(--elev-md);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html,
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* 時間、金額、車號對齊 */
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+  /* 正在輸入的欄位：淡黃底＋品牌框，一眼看出目前在哪一格（沿用 wherecar-hub） */
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):focus,
+  textarea:focus,
+  select:focus {
+    background-color: var(--focus-bg);
+    border-color: var(--brand);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+  /* 手機輸入框至少 16px，避免 iOS 自動放大 */
+  @media (max-width: 639px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px;
+    }
+  }
+}

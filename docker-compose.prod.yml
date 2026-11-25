@@ -1,0 +1,48 @@
+# 正式環境（vps156，/opt/<專案>）。由 deploy.sh 使用；機密放主機上的 .env.prod
+name: anxin-starter
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    env_file: .env.prod
+    volumes:
+      - anxin_starter_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 5s
+      retries: 10
+    networks: [anxin_starter_network]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    networks: [anxin_starter_network]
+
+  backend:
+    build: ./backend
+    image: anxin-starter-backend:latest
+    restart: unless-stopped
+    env_file: .env.prod
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [anxin_starter_network]
+
+  frontend:
+    # build context 是 repo 根目錄，因為前端要讀根目錄的 tokens/
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    image: anxin-starter-frontend:latest
+    restart: unless-stopped
+    depends_on: [backend]
+    ports:
+      - "127.0.0.1:8090:80" # 主機的 nginx／Caddy 反向代理到這個 port
+    networks: [anxin_starter_network]
+
+volumes:
+  anxin_starter_pgdata:
+
+networks:
+  anxin_starter_network:

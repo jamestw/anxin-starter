@@ -1,0 +1,23 @@
+# 開發用：只起資料庫與 Redis，後端與前端在本機跑（uv run / npm run dev）
+# 新專案改 name 與 port，避免跟其他專案撞（YatanSp、wherecar-hub、RideRadar 都在同一台開發機）
+name: anxin-starter
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: anxin
+      POSTGRES_PASSWORD: anxin
+      POSTGRES_DB: anxin
+    ports:
+      - "5442:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6389:6379"
+
+volumes:
+  pgdata:

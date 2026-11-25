@@ -1,0 +1,10 @@
+/* 本專案的品牌色：只改這個檔。其他 token（語意色、車趟狀態色、字型）全系統固定，不要在這裡覆寫。 */
+:root {
+  --brand: #1c3dd1;
+  --brand-hover: #1733b0;
+  --brand-soft: #eef2ff;
+  --on-brand: #ffffff;
+  --cta: #f59e0b;
+  --cta-soft: #fff4db;
+  --on-cta: #613b00;
+}

@@ -1,0 +1,98 @@
+/* ============================================================
+   安心行 設計 token（全系統共用）
+   - 固定值：中性色、語意色、車趟狀態色、字型、圓角、陰影 —— 各專案不要改
+   - 專案自選：只覆寫 --brand* 與 --cta*（見檔案最下方）
+   - 規範文件：https://claude.ai/artifact/3Qz41buLMzSVxdEz6GLt7j
+   同一組色值另有 tokens.ts（React Native / Expo）與 app_tokens.dart（Flutter）。
+   ============================================================ */
+
+:root {
+  /* ---- 品牌（專案覆寫）---- */
+  --brand: #1c3dd1;
+  --brand-hover: #1733b0;
+  --brand-soft: #eef2ff;
+  --on-brand: #ffffff;
+  --cta: #f59e0b;
+  --cta-soft: #fff4db;
+  --on-cta: #613b00;
+
+  /* ---- 中性色 ---- */
+  --bg: #f3f5f9;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-2: #334155;
+  --muted: #64748b;
+  --sidebar: #0b1533;
+  --sidebar-2: #13204a;
+  --sidebar-text: #aab5d1;
+
+  /* ---- 語意色（文字／淺底）---- */
+  --success: #067647;
+  --success-soft: #ecfdf3;
+  --warn: #b54708;
+  --warn-soft: #fffaeb;
+  --danger: #d92d20;
+  --danger-soft: #fef3f2;
+  --info: #1d4ed8;
+  --info-soft: #eff6ff;
+
+  /* ---- 車趟狀態（後台與司機 App 一致）---- */
+  --trip-assigned: #1d4ed8;
+  --trip-assigned-soft: #eff6ff;
+  --trip-departed: #b45309;
+  --trip-departed-soft: #fff4db;
+  --trip-onboard: #067647;
+  --trip-onboard-soft: #e3f6ec;
+  --trip-done: #64748b;
+  --trip-done-soft: #eef1f6;
+  --trip-alert: #d92d20;
+  --trip-alert-soft: #fde8e6;
+
+  /* ---- 輸入聚焦：淡黃底＋品牌框（全站一致）---- */
+  --focus-bg: #fff8e1;
+  --ring: color-mix(in srgb, var(--brand) 25%, transparent);
+
+  /* ---- 字型、圓角、陰影 ---- */
+  --font-body: system-ui, -apple-system, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --round-sm: 6px;
+  --round: 8px;
+  --round-lg: 12px;
+  --elev-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --elev-md: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+/* 深色模式：預留，後台用 <html data-theme="dark"> 開啟 */
+:root[data-theme='dark'] {
+  --brand: #4f6ef7;
+  --brand-hover: #6782ff;
+  --brand-soft: rgba(79, 110, 247, 0.14);
+  --bg: #0b1020;
+  --surface: #121a2e;
+  --surface-2: #0f172a;
+  --border: #1f2a44;
+  --border-strong: #2c3a5c;
+  --text: #e2e8f0;
+  --text-2: #cbd5e1;
+  --muted: #94a3b8;
+  --sidebar: #070c1c;
+  --sidebar-2: #0f1830;
+  --success: #47cd89;
+  --success-soft: rgba(71, 205, 137, 0.12);
+  --warn: #fdb022;
+  --warn-soft: rgba(253, 176, 34, 0.12);
+  --danger: #f97066;
+  --danger-soft: rgba(249, 112, 102, 0.12);
+  --info: #60a5fa;
+  --info-soft: rgba(96, 165, 250, 0.12);
+  --focus-bg: #2a2410;
+}
+
+/* ============================================================
+   各專案品牌色參考（複製到專案的 src/styles/brand.css 覆寫）
+   YatanSp      --brand: #1e3a8a;
+   wherecar-hub --brand: #0d3b2e; --cta: #ff9900;
+   RideRadar    --brand: #1c3dd1; --cta: #ff6400;
+   ============================================================ */
