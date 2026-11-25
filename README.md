@@ -23,6 +23,10 @@ backend/                FastAPI + SQLAlchemy 2 async + Alembic + uv + PyJWT
   app/core/             config、database、security
   app/models/           一張表一個檔
   app/schemas/ services/
+mobile/                 Expo 司機 App（Android + iOS）：登入、今日車趟、狀態按鈕、背景定位
+  src/theme.ts          ← 品牌色（跟 brand.css 同一組）
+  src/tripFlow.ts       車趟狀態流程（與後端 driver_service.NEXT 一致）
+  src/location.ts       背景定位、離線佇列、批次補傳
 docker-compose.yml      開發用 Postgres + Redis
 docker-compose.prod.yml 正式環境
 deploy.sh               部署到 vps156（含遷移、映像確認、健康檢查）
@@ -56,17 +60,35 @@ npm run dev                               # :5173，/api 自動轉到 :8000
 
 先打開「元件範例」頁確認品牌色和元件長相。
 
+## 司機 App（Expo）
+
+```bash
+cd mobile
+npm install
+npx expo start            # iPhone／Android 掃 QR code（需先裝 Expo Go 或 development build）
+npm run typecheck
+```
+
+- 示範司機帳號：driver / demo1234（後台帳號登入 App 會被擋）。
+- 實機連本機後端：`EXPO_PUBLIC_API_URL=http://<電腦區網IP>:8000 npx expo start`。
+- 背景定位在 Expo Go 不完整，要測背景請用 development build：`npx eas-cli build --profile development`。
+- 給司機試用：`npm run build:preview`（Android 出 APK；iOS 走 TestFlight 需 Apple 開發者帳號）。
+- 上架：`npm run release:android`／`npm run release:ios`（EAS 雲端打包，iOS 不需要 Mac）。
+- 新專案要改：`app.json` 的 name／slug／bundleIdentifier／package、`eas.json` 的 API 網址、`src/theme.ts` 品牌色，並放上 icon。
+- iOS 審核會看背景定位理由，`app.json` 的 NSLocation… 說明要寫清楚為什麼需要「一律允許」。
+
 ## 檢查
 
 ```bash
 cd backend  && uv run ruff check . && uv run ruff format --check . && uv run pytest
 cd frontend && npm run lint && npm test && npm run build
+cd mobile   && npm run typecheck
 ```
 
 ## 規則摘要
 
 - 顏色只用 token：`bg-brand`、`text-danger`、`bg-trip-departed-soft`…，頁面不寫 `#hex` 或 `blue-600`。
-- 車趟狀態一律用 `<StatusChip status="departed" />`；狀態名稱前後端與司機 App 一致：assigned／departed／onboard／done／alert。
+- 車趟狀態一律用 `<StatusChip status="departed" />`（網頁與 App 各一個，顏色同一組 token）；狀態名稱前後端與司機 App 一致：assigned／departed／onboard／done／alert。
 - 通知與確認只用 `toast.success()`、`await confirm({...})`（`components/Feedback.tsx`）。
 - 強調色叫 `cta`（不叫 accent，因為 shadcn 的 accent 是 hover 淺底）。用 shadcn CLI 加元件時，`primary`、`muted`、`destructive` 等名稱已對到 token。
 - API：`/api/v1/<複數資源>`、JSON snake_case、錯誤 `{ "detail": "中文訊息" }`、列表 `{ items, total }` 搭配 `limit`／`offset`／`q`。

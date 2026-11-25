@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
 
-from sqlalchemy import DateTime, Enum, String
+from sqlalchemy import DateTime, Enum, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
@@ -28,6 +28,7 @@ class Trip(CarrierScopedMixin, TimestampMixin, Base):
     pickup_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
     pickup_address: Mapped[str] = mapped_column(String(200))
     dropoff_address: Mapped[str] = mapped_column(String(200))
+    driver_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), index=True)
     driver_name: Mapped[str | None] = mapped_column(String(60))
     plate_no: Mapped[str | None] = mapped_column(String(20))
     status: Mapped[TripStatus] = mapped_column(

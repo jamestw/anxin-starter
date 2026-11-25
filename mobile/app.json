@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "安心行-司機",
+    "slug": "anxin-starter-driver",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "bundleIdentifier": "tw.anxin.starter.driver",
+      "supportsTablet": false,
+      "infoPlist": {
+        "UIBackgroundModes": ["location"],
+        "NSLocationWhenInUseUsageDescription": "行程中需要取得位置，讓調度與乘客看到車輛目前位置與預估到站時間。",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "行程中即使切換到其他 App 或關閉螢幕，也需要持續回傳車輛位置給調度與乘客。"
+      }
+    },
+    "android": {
+      "package": "tw.anxin.starter.driver",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_LOCATION"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "isAndroidBackgroundLocationEnabled": true,
+          "isAndroidForegroundServiceEnabled": true
+        }
+      ],
+      "expo-secure-store"
+    ]
+  }
+}

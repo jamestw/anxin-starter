@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware'
 export interface AuthUser {
   id: number
   name: string
-  role: 'carrier_admin' | 'dispatcher' | 'platform_admin'
+  role: 'carrier_admin' | 'dispatcher' | 'platform_admin' | 'driver'
   carrier_id: number | null
   carrier_name: string | null
 }

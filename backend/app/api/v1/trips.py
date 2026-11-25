@@ -2,12 +2,18 @@ from typing import Annotated
 
 from fastapi import APIRouter, Query
 
-from app.api.deps import DB, CurrentCarrier
+from app.api.deps import DB, CurrentCarrier, require_roles
+from app.models.user import UserRole
 from app.schemas.common import Page
 from app.schemas.trip import TripOut
 from app.services import trip_service
 
-router = APIRouter(prefix="/trips", tags=["trips"])
+# 後台 API 只給車行管理員與調度；司機走 /driver/...
+router = APIRouter(
+    prefix="/trips",
+    tags=["trips"],
+    dependencies=[require_roles(UserRole.carrier_admin, UserRole.dispatcher)],
+)
 
 
 @router.get("", response_model=Page[TripOut])

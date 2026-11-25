@@ -21,6 +21,10 @@ export default function LoginPage() {
   const mutation = useMutation({
     mutationFn: () => login(username, password),
     onSuccess: (r) => {
+      if (r.user.role === 'driver') {
+        toast.error('司機帳號請用司機 App 登入')
+        return
+      }
       setLogin(r.access_token, r.user)
       navigate('/', { replace: true })
     },

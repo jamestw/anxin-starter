@@ -12,6 +12,7 @@ class UserRole(enum.StrEnum):
     platform_admin = "platform_admin"  # 平台管理，不屬於任何車行
     carrier_admin = "carrier_admin"
     dispatcher = "dispatcher"
+    driver = "driver"  # 司機 App 帳號，隸屬車行
 
 
 class User(TimestampMixin, Base):
